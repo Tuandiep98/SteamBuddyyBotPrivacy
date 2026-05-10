@@ -2,7 +2,7 @@
 
 **Tiếng Việt:** [Chính sách bảo mật (Vietnamese)](privacy-policy.vi.md)
 
-**Document version:** 1.0  
+**Document version:** 1.1  
 **Effective date:** [10/05/2026]  
 **Last updated:** [10/05/2026]
 
@@ -62,6 +62,10 @@ Some features send **text you type or context generated in the bot** (e.g. game 
 
 We do not require your home address, government ID, or other special-category data to use the bot. Please **do not** send such information through the bot.
 
+### 3.8 Technical error monitoring (Sentry)
+
+When a software failure occurs, the server running the bot may send **automated error reports** to **Sentry** (Functional Software Inc. — data region depends on the operator’s Sentry organization settings). Reports may include: error type, stack trace, application version, runtime environment, and the Telegram **update identifier** (`update_id`). We **do not** use Sentry to store full chat logs or message content for marketing. If enabled in server configuration, a **one-way hash** (with a server-side secret “salt”) may be attached to group issues by user **without** sending raw `telegram_id` to Sentry.
+
 ---
 
 ## 4. Purposes of processing
@@ -71,6 +75,7 @@ We do not require your home address, government ID, or other special-category da
 - Personalise suggestions, digests, and notifications (when enabled).
 - Apply free-plan limits and manage Premium subscriptions.
 - Improve reliability and security (including minimal technical logging if any).
+- Detect and fix technical incidents (controlled error monitoring via Sentry when enabled).
 
 ---
 
@@ -87,18 +92,22 @@ Depending on your region, legal bases may include: performance of a contract / t
 | **Telegram**      | Messaging platform; processes account data and Stars payments per Telegram’s policies.                                                  |
 | **Valve / Steam** | Steam Web API and public Steam data.                                                                                                    |
 | **AI providers**  | The bot may call **DeepSeek** and/or **Google (Gemini)** APIs to process prompts. Data transferred is subject to each provider’s terms. |
+| **Sentry**        | Error monitoring and crash reporting (subprocessor). Terms & DPA: [sentry.io/legal](https://sentry.io/legal/).                          |
 
 Reference links (may change over time):
 
 - [Telegram Privacy Policy](https://telegram.org/privacy)
 - [Steam Privacy Policy](https://store.steampowered.com/privacy_agreement/)
 - [Google Privacy Policy](https://policies.google.com/privacy)
+- [Sentry Privacy Policy](https://sentry.io/privacy/)
 
 ---
 
 ## 7. Storage
 
 User data is stored in a **database controlled by the bot operator** (default in this project: SQLite at the path set in `DATABASE_URL`). Retention: **until you delete data through the bot or we delete it under internal policy / legal obligation** [30 days — adjust if this describes a different retention rule].
+
+**Error reports (Sentry):** Retention of error events is set in the Sentry project (often kept short). We do not use Sentry to intentionally store message content.
 
 **Note on AI:** Deleting data in the bot **does not** automatically delete data that an AI provider may retain under its own policies. We do not control provider-side logs.
 
@@ -126,6 +135,8 @@ You can send **`/delete_user_data`** or **`/delete-user-data`**. The bot will as
 ### 8.2 Other requests
 
 You may request access, correction, or additional deletion via the **email / contact channel** in Section 1, within applicable law. Response time: [30 days].
+
+**Technical errors (Sentry):** Events already sent to Sentry may remain for the project’s retention period. Deleting data in the bot **does not** automatically delete historical events in Sentry. Finding or deleting a specific report may **not be feasible** if events do not contain direct identifiers; you may still contact the controller for assistance where possible.
 
 ---
 
